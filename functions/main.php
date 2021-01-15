@@ -68,62 +68,70 @@ function unsetMessage(){
 function setUserName($nameSess, $email){    
     $_SESSION[$nameSess] = $email;
 }
-//записываем данные входа в сессию
-function sendFormSingIn(){
-    $entreEmail = cleanData( $_POST['entreEmail'] ?? null );
-    $password   = cleanData( $_POST['password']   ?? null );
-    // проверяем заполнены ли данные
-    if( !$entreEmail || !$password ){
 
-        if( !$entreEmail ){
-            $errorsSingIn['entreEmail'] = 'Email is required!';
-        }
-        if( !$password ){
-            $errorsSingIn['password'] = 'Password is required!';
-        } 
-        //если есть ошибки, выводим сообщение об ошибках
-        setMessage('danger', $errorsSingIn );
-        redirect('singin');        
-    }
-    else{              
-        // если запонены тогда записываем в сессию значения
-        setUserName('user', $entreEmail); 
-        //переходим сразу после входа на главную страницу
-        redirect( 'home' ); 
-        // print_r($entreEmail); 
-    }    
-}
+// улучшенная версия функции sendFormSingIn в домашнем задании 5-го урока
+
+//записываем данные входа в сессию
+// function sendFormSingIn(){
+    //     $entreEmail = cleanData( $_POST['entreEmail'] ?? null );
+    //     $password   = cleanData( $_POST['password']   ?? null );
+    //     // проверяем заполнены ли данные
+    //     if( !$entreEmail || !$password ){
+
+    //         if( !$entreEmail ){
+    //             $errorsSingIn['entreEmail'] = 'Email is required!';
+    //         }
+    //         if( !$password ){
+    //             $errorsSingIn['password'] = 'Password is required!';
+    //         } 
+    //         //если есть ошибки, выводим сообщение об ошибках
+    //         setMessage('danger', $errorsSingIn );
+    //         redirect('singin');        
+    //     }
+    //     else{              
+    //         // если запонены тогда записываем в сессию значения
+    //         setUserName('user', $entreEmail); 
+    //         //переходим сразу после входа на главную страницу
+    //         redirect( 'home' ); 
+    //         // print_r($entreEmail); 
+    //     }    
+// }
+
+// улучшенная версия функции sendFormSingUp в домашнем задании 5-го урока
+
 //записываем данные регистрации в сессию
-function sendFormSingUp(){
-    $newEmail    = cleanData( $_POST['newEmail']    ?? null );
-    $newpassword = cleanData( $_POST['newpassword'] ?? null );
-    $repass      = cleanData( $_POST['repass']      ?? null );    
-    if( !$newEmail || !$newpassword || !$repass ){
-        // проверяем заполнены ли данные
-        if( !$newEmail ){
-            $errorsSingUp['newEmail'] = 'Email is required!';
-        }                
-        if( strlen($newpassword) < 6 ){
-            $errorsSingUp['newpassword'] = 'Password too short';
-        }       
-        if( !$repass || $repass != $newpassword ){
-            $errorsSingUp['repass'] = 'Passwords do not match!';           
-        }
-        //если есть ошибки, выводим сообщение об ошибках
-        setMessage('danger', $errorsSingUp );
-        redirect('singup'); 
-    }
-    else{ 
-        // если запонены тогда записываем в сессию значения
-        setUserName('user', $newEmail);         
-        //переходим сразу после входа на главную страницу
-        redirect( 'home' ); 
-    }    
-}
+// function sendFormSingUp(){
+    //     $newEmail    = cleanData( $_POST['newEmail']    ?? null );
+    //     $newpassword = cleanData( $_POST['newpassword'] ?? null );
+    //     $repass      = cleanData( $_POST['repass']      ?? null );    
+    //     if( !$newEmail || !$newpassword || !$repass ){
+    //         // проверяем заполнены ли данные
+    //         if( !$newEmail ){
+    //             $errorsSingUp['newEmail'] = 'Email is required!';
+    //         }                
+    //         if( strlen($newpassword) < 6 ){
+    //             $errorsSingUp['newpassword'] = 'Password too short';
+    //         }       
+    //         if( !$repass || $repass != $newpassword ){
+    //             $errorsSingUp['repass'] = 'Passwords do not match!';           
+    //         }
+    //         //если есть ошибки, выводим сообщение об ошибках
+    //         setMessage('danger', $errorsSingUp );
+    //         redirect('singup'); 
+    //     }
+    //     else{ 
+    //         // если запонены тогда записываем в сессию значения
+    //         setUserName('user', $newEmail);         
+    //         //переходим сразу после входа на главную страницу
+    //         redirect( 'home' ); 
+    //     }    
+// }
+
 // действие кнопки выхода
 function exitUser(){
     //удалить сессию user
-    $_SESSION['user'] = '';
+    // $_SESSION['user'] = '';
+    session_destroy();
     // перейти на главную страницу
     redirect( 'home' );  
 }
@@ -142,14 +150,14 @@ function makeDir($path){
 function uploadFile(){
     $file = $_FILES['file'];
     // dump($file);
-//     Array
-// (
-//     [name] => 13d9c28cd1388a19578e8193fce0bb04.jpg
-//     [type] => image/jpeg
-//     [tmp_name] => W:\userdata\php_upload\phpC769.tmp
-//     [error] => 0
-//     [size] => 80236
-// )
+    //     Array
+    // (
+    //     [name] => 13d9c28cd1388a19578e8193fce0bb04.jpg
+    //     [type] => image/jpeg
+    //     [tmp_name] => W:\userdata\php_upload\phpC769.tmp
+    //     [error] => 0
+    //     [size] => 80236
+    // )
 
     if( $file['error']!=0 ){
         if( $file['error'] == 4 ){
@@ -374,6 +382,211 @@ function removeSlider(){
     }
     redirect('managesliders');    
 }
+// =================lesson 5=====_08.11.2020_=============
+
+function saveReview(){
+    $name    = cleanData($_POST['name']    ?? null);
+    $review  = cleanData($_POST['review']  ?? null);
+    $captcha = cleanData($_POST['captcha'] ?? null);
+    $time = time();
+
+    if( !$name || !$review ){
+        setMessage('danger', 'All fields required!');
+    } 
+    elseif($captcha != $_SESSION['captcha']){
+        setMessage('danger', 'Captcha is invalid!');
+    }
+    else{
+        $f = fopen('txt/reviews.txt', 'a');
+        fwrite($f, "$name|$review|$time\r\n");
+        fclose($f);
+        setMessage('success', 'Review sent!');
+    }
+    redirect('reviews');
+}
+function showReview(){
+    // $html = file_get_contents('http://google.com');// выводим страничку с содержимым
+    // ----------------------------------------------
+    // $f = fopen('reviews.txt', 'r');
+    // if($f){
+    //     $html = '';
+    //     while(!feof($f)){// считывает посимвольно до конца файло, пока не будет false
+    //         $html .= fgetc($f);            
+    //     }  
+    //     echo $html;      
+    // }
+    // fclose($f);
+    // ------------------------
+    //
+    $lines = file('txt/reviews.txt');
+    // переворачиваем массив, чтоб последние отзывы были первыми
+    $lines = array_reverse($lines);
+    // dump($lines);
+    // foreach ($lines as $line) {
+    //     list($name, $review, $time) = explode('|', $line);
+    //     $date = date('d-m-Y H:i' , trim($time));// обираем пробелы в виде \r\n
+    //     echo '<div class="border p-3 m-3">';
+    //     echo "{$name} | $date <hr><bloquote>$review</bloquote>";
+    //     echo '</div>';
+    // }
+    //количество отзывов на странице
+    $perPage = 2;
+    //Количестсво страниц в зависимости от кол-ва отзывов
+    $totalPages = ceil(count($lines) / $perPage);
+    $p = $_GET['p'] ?? 0;
+
+    for ($i = $p*$perPage; ($i < $p * $perPage + $perPage) && $i < count($lines); $i++) {       
+        list($name, $review, $time) = explode('|', $lines[$i]);
+        $date = date('d-m-Y H:i' , trim($time));// обираем пробелы в виде \r\n
+        echo '<div class="border p-3 m-3">';
+        echo "{$name} | $date <hr><bloquote>$review</bloquote>";
+        echo '</div>';
+    }
+    //Пагинация - страницы
+    echo '<nav><ul class="pagination">';
+    for ($i=0; $i < $totalPages; $i++) { 
+        echo "<li class='page-item " . ($p==$i ? 'active' : '') . "'><a class='page-link' href='index.php?page=reviews&p={$i}'>".($i+1)."</a></li>";      
+    }
+    echo '</ul></nav>';
+}
+// ================ HomeWork 08.11.2020 ==========================
+function saveLoginPass($name, $pass){   
+    $userDataFile = fopen('txt/user-data.txt', 'a');
+    fwrite($userDataFile, "$name|$pass\r\n");
+    fclose($userDataFile);  
+}
+function sendFormSingUp(){
+    $newEmail    = cleanData( $_POST['newEmail']    ?? null );
+    $newpassword = cleanData( $_POST['newpassword'] ?? null );
+    $repass      = cleanData( $_POST['repass']      ?? null );    
+   
+    if( !$newEmail ){
+        $errorsSingUp['newEmail'] = 'Email is required!';
+        setMessage('danger', $errorsSingUp );
+        redirect('singup'); 
+    }                
+    elseif( strlen($newpassword) < 6 ){
+        $errorsSingUp['newpassword'] = 'Password too short';
+        setMessage('danger', $errorsSingUp );
+        redirect('singup'); 
+    }       
+    elseif( !$repass || $repass != $newpassword ){
+        $errorsSingUp['repass'] = 'Passwords do not match!';  
+        setMessage('danger', $errorsSingUp );
+        redirect('singup');          
+    }   
+    else{ 
+        //сохраняем данные пользователя для дальнейшего входа на сайт
+        saveLoginPass($newEmail, $newpassword);
+        //записываем в сессию значения
+        setUserName('user', $newEmail);              
+        //переходим сразу после входа на главную страницу
+        redirect( 'home' ); 
+    }    
+}
+
+function sendFormSingIn(){
+    $entreEmail = cleanData( $_POST['entreEmail'] ?? null );
+    $password   = cleanData( $_POST['password']   ?? null );
+    //массив записанных данных регистрации
+    $acounts = file('txt/user-data.txt');
+    //Создаем переменные,в которые запишем проверочное слово при полном совпадении
+    //.. заполенных данных пользователем с массивом 
+    $checkEmail = '';
+    $checkPass = '';    
+    //Перебираем массив всех существующих данных
+    foreach ($acounts as $acount) {   
+        //Разбираем строку данных каждого пользователя на массив     
+        $arrAcount = explode('|', $acount);  
+        // dump($arrAcount) ;  
+        //Если есть точное совпадение с емейлом       
+        if($arrAcount[0] == $entreEmail){
+            $checkEmail = 'goodEmail';
+            //если и пароль совпадает этого же емейла            
+            if($arrAcount[1] == $password){                
+                $checkPass = 'goodPass';
+            } 
+        }                      
+    }   
+    // проверяем заполнены ли данные
+    if( !$entreEmail || !$password ){
+
+        if( !$entreEmail ){
+            $errorsSingIn['entreEmail'] = 'Email is required!';
+        }
+        if( !$password ){
+            $errorsSingIn['password'] = 'Password is required!';
+        } 
+        //если есть ошибки, выводим сообщение об ошибках
+        setMessage('danger', $errorsSingIn );
+        redirect('singin');        
+    }   
+    //если есть хоть одно не совпадение , тогда ошибка 
+    elseif( $checkEmail != 'goodEmail' || $checkPass != 'goodPass') {
+        setMessage('danger', 'Wrong name or password!');        
+        redirect('singin');
+    }       
+    else{              
+        // если всё правильно записываем в сессию значения
+        setUserName('user', $entreEmail); 
+        //переходим сразу после входа на главную страницу
+        redirect( 'home' ); 
+        // print_r($entreEmail); 
+    }    
+}
+function sendVote(){
+    $vote = cleanData( $_POST['vote'] ?? null );  
+    
+    $listVotes = file('txt/vote.txt');  
+    $userVote = fopen('txt/vote.txt', 'w+');     
+    foreach ($listVotes as $listVote) {             
+        $arrlistVote = explode(':', $listVote);         
+        if($arrlistVote[0] == $vote){                     
+            $arrlistVote[1] = 1*(trim($arrlistVote[1])) + 1;                        
+        }
+        else{
+            $arrlistVote[1] = 0 + trim($arrlistVote[1]);
+        }
+        fwrite($userVote, "$arrlistVote[0]:$arrlistVote[1]\r\n");
+    } 
+    fclose($userVote); 
+    // redirect('home');    
+}
+
+function countAllVoites(){
+    $listVotes = file('txt/vote.txt'); 
+    $count = 0;
+    foreach ($listVotes as $listVote) {  
+        $arrlistVote = explode(':', $listVote); 
+        $count += 1*(trim($arrlistVote[1])); 
+    }
+    return $count;
+}
+
+function getArrCountVotes(){
+    $arrCountVotes =[];
+    $listVotes = file('txt/vote.txt'); 
+    foreach ($listVotes as $listVote) { 
+        $arrlistVote = explode(':', $listVote);  
+        array_push($arrCountVotes, trim($arrlistVote[1]));
+    } 
+    // dump($arrCountVotes);
+    return $arrCountVotes;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 

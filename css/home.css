@@ -1,0 +1,21 @@
+#charts{    
+    margin-top: 2rem;
+}
+.charts1{
+    width: 40%;
+}
+.progress{   
+    margin-top: 0.3rem;
+}
+.progress>p{
+    font-size: 1rem;
+    line-height: 1rem ;      
+}
+.charts2{
+    width: 336px;
+    /* height: 600px; */
+    margin: 3rem 0;
+    padding: 1rem;
+    border: 1px solid rgb(110, 110, 110); 
+   
+}

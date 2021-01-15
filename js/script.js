@@ -7,18 +7,22 @@ let window2 = document.querySelectorAll('.window');
 
 for (let i = 0; i < window2.length; i++) {
     let sliderBox = window2[i].firstElementChild;     
-    let elemImgs2 = sliderBox.children;
-   
+    let elemImgs2 = sliderBox.children;   
+    // console.log(elemImgs2[1].getAttribute('rel'));
     //Собираем в массив пути картинок 150*150
     let pics = [];
     for (let j = 0; j < elemImgs2.length; j++) {
         pics.push(elemImgs2[j].src);        
-    }   
+    }
+    // console.log(pics);
+
     //Собираем в массив пути оригиналов картинок
     let picsRel = [];
     for (let j = 0; j < elemImgs2.length; j++) {
         picsRel.push(elemImgs2[j].getAttribute('rel'));        
-    }   
+    }
+    // console.log(picsRel);
+
     let count = 0;
 
     next2[i].addEventListener('click', ()=>{  
@@ -58,17 +62,35 @@ for (let i = 0; i < allImgs.length; i++) {
         let rel = allImgs[i].getAttribute('rel');
         // установить это значение элементу big
         picture.setAttribute('src', rel);
-        picture.src = allImgs[i].getAttribute('rel');     
-        body.prepend(bgModalWindow);  
+        picture.src = allImgs[i].getAttribute('rel');       
     });
 }
 
 bgModalWindow.prepend(boxPicture);
 boxPicture.prepend(picture);
 
+for (const item of allImgs) {
+    item.addEventListener('click', ()=>{
+        // console.log(event.target);
+        body.prepend(bgModalWindow);
+    });
+}
+
 picture.addEventListener('click', ()=>{
     bgModalWindow.remove()
     event.cancelBubble = true;
 });
+// ===============HomeWork 08.11.2020=================
+// let formVote = document.getElementById('formVote');
+// let formButton = document.getElementById('formButton');
+// let sectionVote = document.getElementById('sectionVote');
 
+// console.log(sectionVote);
+// sectionVote.style.display = 'none';
+// formVote.style.display = 'block';
+
+// formButton.addEventListener('click', ()=>{
+//     sectionVote.style.display = 'block';
+//     formVote.style.display = 'none';
+// });
 

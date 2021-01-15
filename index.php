@@ -4,11 +4,12 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Gallery</title>
+  <title>Lesson_3</title>
   <link rel="stylesheet" href="css/style.css">
   <link rel="stylesheet" href="css/sing.css">
   <link rel="stylesheet" href="css/createSliders.css">
   <link rel="stylesheet" href="css/gallery.css">
+  <link rel="stylesheet" href="css/home.css">
   <link rel="stylesheet" 
         href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css"
         integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z" 
@@ -42,8 +43,8 @@
         <?php endforeach ?>
       </ul>
 
-      <ul class="navbar-nav ml-auto">
-        <?php if( isset($_SESSION['user']) ): ?>
+      <ul class="navbar-nav ml-auto">        
+        <?php if(isset($_SESSION['user'])): ?>
         <li>
           <form method="POST" 
                 action="index.php" 
@@ -60,7 +61,7 @@
         <li><a href="index.php?page=singup">Sing up</a></li>
         <?php endif ?>
       </ul>
-
+      
     </div>
   </nav>
 
@@ -75,6 +76,7 @@
           }
         ?>
   </div>
+
 
   <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js"
           integrity="sha512-bLT0Qm9VnAYZDflyKcBaQ2gg0hSYNQrJ8RilYldYQ1FxQYoCLtUjuuRuZo+fjqhx/qtq/1itJ0C2ejDxltZVFg=="

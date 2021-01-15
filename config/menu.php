@@ -2,7 +2,8 @@
 return[
     'home'          => 'Home',
     'gallery'       => 'Gallery',
+    'reviews'       => 'Reviews',
     'contacts'      => 'Contact us',    
-    'uploads'       => 'Uploads PHP',
+    'uploads'       => 'Uploads',
     'managesliders' => 'Manage Sliders',
 ];
