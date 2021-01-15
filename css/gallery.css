@@ -1,0 +1,87 @@
+.gallery2{
+    position:relative;
+    width:960px;   
+}
+.titleSlider{
+    font-size: 1.7rem;
+    font-weight: 700;
+    text-align: center;
+    color: #e66a46;
+}
+.prev2{
+	width:55px;
+	height:60px;
+	background:url(../img/button.png);
+	position:absolute;
+	top:115px;
+	left:0;
+}
+.prev2:hover{
+	background-position: 0 -120px;
+}
+
+.next2{
+	width:55px;
+	height:60px;
+	background:url(../img/button.png) 0 -60px;
+	position:absolute;
+	top:115px;
+	right:0;
+}
+.next2:hover{
+	background-position: 0 -180px;
+}
+.window{
+    width: 850px; 
+    height:180px; 
+    overflow:hidden;
+    margin:0 55px;
+    position:relative;
+}
+.sliderBox{
+    display: flex;
+    flex-flow: row nowrap;
+    /* width: 850px; */
+    overflow: hidden;
+    position:absolute;
+    top:0; 
+    left:0;
+}
+.sliderBox img{    
+    margin: 10px 5px;
+    float:left;
+    border-style: ridge !important;
+    border: 5px solid white;
+}
+.sliderBox img:hover{
+    transform: scale(1.1);
+    transition: all ease 0.5s;    
+}
+.bgModalWindow{    
+    width: 100vw;
+    height: 100vh;
+    position: fixed;    
+    background-color: rgba(202, 232, 248, 0.856);   
+    z-index: 1;
+}
+.boxPicture{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100vw;
+    height: 100vh;      
+}
+.pictureModalWindow{    
+    max-width: 100vw;
+    max-height: 100vh;
+    box-shadow: 1px 1px 20px 6px gray;
+}
+
+
+
+
+
+
+
+
+
